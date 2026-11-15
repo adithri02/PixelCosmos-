@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Abandoned but Not Forgotten</title>
+<style>
+:root{color-scheme:dark;--bg:#04060f;--glass:rgba(16,24,52,.62);--text:#eaf0ff;--muted:#93a0c8;--cyan:#38e8ff;--pink:#ff4fd8;--gold:#ffd166;--line:rgba(120,160,255,.28);
+box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1}
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(30px + env(safe-area-inset-top,0px)) 22px 30px}
+.kicker{letter-spacing:6px;font-size:12px;color:var(--cyan);text-transform:uppercase}
+h1{margin:14px 0;font-size:clamp(38px,9vw,92px);line-height:1.02;font-weight:800;background:linear-gradient(100deg,#fff,var(--cyan) 40%,var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(56,232,255,.35))}
+.hero p{max-width:600px;color:var(--muted);font-size:clamp(15px,2.4vw,19px);margin:0 auto 26px}
+.go{border:1px solid var(--cyan);color:var(--cyan);background:rgba(56,232,255,.08);padding:14px 30px;border-radius:999px;font-size:16px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;box-shadow:0 0 24px rgba(56,232,255,.35);animation:glow 2.4s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 44px rgba(56,232,255,.65)}}
+.scroll{margin-top:34px;color:var(--muted);font-size:12px;letter-spacing:3px}
+main{max-width:980px;margin:0 auto;padding:30px 16px 40px}
+h2.sec{font-size:13px;letter-spacing:5px;text-transform:uppercase;color:var(--cyan);text-align:center;margin:44px 0 16px;font-weight:600}
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:18px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.signal{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:6px;font-size:14px;color:var(--muted)}
+.dots i{display:inline-block;width:12px;height:12px;border-radius:50%;border:1px solid var(--cyan);margin:0 3px;transition:.4s}
+.dots i.on{background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.portals{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.portal{display:flex;align-items:center;gap:14px;padding:14px;color:var(--text);cursor:pointer;text-align:left;font-size:16px;font-family:inherit}
+.portal.on{border-color:var(--cyan);box-shadow:0 0 26px rgba(56,232,255,.3)}
+.planet{flex:none;width:56px;height:56px;border-radius:50%;animation:spin 14s linear infinite}
+.pm{background:radial-gradient(circle at 30% 30%,#e8eaf2,#8f93a1 55%,#4b4e5c);box-shadow:0 0 22px rgba(200,205,230,.35)}
+.pr{background:radial-gradient(circle at 30% 30%,#ffb08a,#d4562f 55%,#6e2214);box-shadow:0 0 22px rgba(255,110,60,.45)}
+@keyframes spin{to{filter:hue-rotate(12deg) brightness(1.15)}}
+.portal b{display:block;font-size:17px}.portal small{color:var(--muted)}
+.scene{position:relative;height:370px;border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 0 50px rgba(30,60,160,.25)}
+.scene.moon{background:radial-gradient(ellipse at 82% 16%,#1f3270 0,#060a1c 52%)}
+.scene.mars{background:linear-gradient(#150a16,#52243a 45%,#8a3a2c 62%)}
+.scene::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 4px);pointer-events:none}
+.ground{position:absolute;left:-5%;right:-5%;bottom:0;height:44%;border-radius:50% 50% 0 0/20% 20% 0 0}
+.moon .ground{background:radial-gradient(ellipse at 22% 45%,#6f7280 0 6%,transparent 7%),radial-gradient(ellipse at 72% 58%,#6f7280 0 8%,transparent 9%),linear-gradient(#b1b4c0,#7d808c)}
+.mars .ground{background:radial-gradient(ellipse at 30% 50%,#8c3a25 0 7%,transparent 8%),radial-gradient(ellipse at 76% 42%,#8c3a25 0 6%,transparent 7%),linear-gradient(#d2663f,#9c4128)}
+.orb{position:absolute;top:9%;right:8%;width:66px;height:66px;border-radius:50%}
+.moon .orb{background:radial-gradient(circle at 35% 35%,#7fc0ff,#1d4f9e 60%,#0b2a55);box-shadow:0 0 36px #3b82f6}
+.mars .orb{width:34px;height:34px;top:14%;background:#fff0c8;box-shadow:0 0 46px 14px rgba(255,200,130,.55)}
+.dust i{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(255,200,160,.55);animation:drift linear infinite}
+@keyframes drift{from{transform:translateX(-30px)}to{transform:translateX(1100px)}}
+.c{position:absolute;width:22px;height:22px;border:2px solid var(--cyan);opacity:.8;z-index:2}
+.c1{top:10px;left:10px;border-right:0;border-bottom:0}.c2{top:10px;right:10px;border-left:0;border-bottom:0}
+.c3{bottom:10px;left:10px;border-right:0;border-top:0}.c4{bottom:10px;right:10px;border-left:0;border-top:0}
+.spot{position:absolute;z-index:3;transform:translate(-50%,-50%);width:70px;height:70px;border-radius:50%;border:2px solid var(--pink);background:rgba(4,6,15,.6);font-size:32px;cursor:pointer;animation:ping 2s infinite,bob 3.6s ease-in-out infinite}
+.spot.seen{border-color:var(--cyan)}
+.spot span{position:absolute;left:50%;top:76px;transform:translateX(-50%);white-space:nowrap;font-size:11px;letter-spacing:1px;text-transform:uppercase;background:rgba(4,6,15,.8);padding:2px 8px;border-radius:8px;color:var(--text)}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,79,216,.6)}100%{box-shadow:0 0 0 22px rgba(255,79,216,0)}}
+@keyframes bob{50%{margin-top:-9px}}
+.hint{text-align:center;color:var(--muted);font-size:13px;margin:10px 0 0}
+.panel{padding:22px;margin-top:16px}
+.top{display:flex;gap:16px;align-items:center}
+.big{font-size:54px}
+.panel h3{margin:0;font-size:22px}
+.tag{color:var(--gold);font-size:13px;margin:2px 0 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:16px 0}
+.stat{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;background:rgba(4,6,15,.5)}
+.stat b{display:block;font-size:28px;color:var(--cyan);text-shadow:0 0 14px rgba(56,232,255,.5)}
+.stat small{color:var(--muted);font-size:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chips span{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px;color:var(--text);background:rgba(56,232,255,.07)}
+.lost{color:var(--pink);font-size:12px;letter-spacing:3px;animation:blink 1.4s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+.tl{display:flex;gap:12px;overflow-x:auto;padding:8px 4px 16px;scroll-snap-type:x mandatory}
+.tl button{flex:none;scroll-snap-align:start;width:150px;padding:12px;text-align:left;color:var(--text);cursor:pointer;font-family:inherit;font-size:14px;border-top:3px solid var(--pink)}
+.tl button.seen{border-top-color:var(--cyan)}
+.tl b{display:block;font-size:22px;color:var(--gold)}
+.tl small{color:var(--muted)}
+.badge{display:none;margin-top:16px;padding:18px;text-align:center;border-radius:16px;border:1px solid var(--gold);background:linear-gradient(135deg,rgba(255,209,102,.14),rgba(255,79,216,.14));box-shadow:0 0 30px rgba(255,209,102,.3)}
+.opt,.qbtn{display:block;width:100%;text-align:left;margin:8px 0;padding:13px;border-radius:12px;border:1px solid var(--line);background:rgba(4,6,15,.55);color:var(--text);font-size:16px;font-family:inherit;cursor:pointer}
+.qbtn{width:auto;display:inline-block;border-color:var(--cyan);color:var(--cyan)}
+.opt:hover:not(:disabled){border-color:var(--cyan)}
+.opt.good{background:rgba(40,160,100,.4)}.opt.bad{background:rgba(190,40,70,.45)}
+footer{position:relative;z-index:1;text-align:center;color:var(--muted);font-size:13px;padding:10px 16px 34px}
+@media(max-width:560px){.scene{height:330px}.spot{width:60px;height:60px;font-size:27px}.big{font-size:42px}.portal{padding:10px;gap:10px}.planet{width:44px;height:44px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas>
+<div class="wrap">
+<section class="hero">
+<div class="kicker" id="kicker"></div>
+<h1 id="title"></h1>
+<p id="subtitle"></p>
+<a class="go" href="#hall">Enter the museum</a>
+<div class="scroll">▼ SCROLL TO BEGIN ▼</div>
+</section>
+
+<main id="hall">
+<h2 class="sec">Choose a world</h2>
+<div class="signal"><span>Signals recovered</span><span class="dots" id="dots"></span><span id="progText"></span></div>
+<div class="portals">
+<button class="glass portal on" id="pMoon"><div class="planet pm"></div><div><b>The Moon</b><small id="cMoon"></small></div></button>
+<button class="glass portal" id="pMars"><div class="planet pr"></div><div><b>Mars</b><small id="cMars"></small></div></button>
+</div>
+<div id="scene" class="scene moon"></div>
+<p class="hint">Tap a pulsing object to receive its transmission. Cyan means recovered.</p>
+<div id="panel" class="glass panel"></div>
+<div id="badge" class="badge"><b style="font-size:20px">🏅 Curator Badge unlocked</b><br>You recovered every signal. Now face the final transmission below.</div>
+
+<h2 class="sec">Timeline of silence</h2>
+<div class="tl" id="tl"></div>
+
+<h2 class="sec">Final transmission</h2>
+<div id="quiz" class="glass panel"></div>
+
+</main>
+<footer id="footer"></footer>
+</div>
+
+<script>
+/* =====================================================================
+   EDIT HERE: everything on the website comes from this section.
+   Change only the words between the quote marks "like this".
+   Keep the quote marks, commas and brackets exactly as they are.
+   x and y = where the pulsing button sits (0 to 100 percent).
+   year = the year the object went silent or was left behind.
+   planned and actual = years it was meant to work vs how long it worked.
+   ===================================================================== */
+
+var SITE = {
+  team: "PixelCosmos",
+  title: "Abandoned but Not Forgotten",
+  subtitle: "A virtual museum of the machines humanity left behind on the Moon and Mars. Visit each one and discover why it still matters.",
+  footer: "Made for the NASA Space Apps Challenge by PixelCosmos. Facts based on NASA mission records. Built with AI assistance."
+};
+
+var MOON = [
+  { icon: "🚙", x: 22, y: 70, name: "Apollo Lunar Rover", year: 1972,
+    tag: "Left behind 1971–1972 · Apollo 15, 16 and 17",
+    text: "Three electric moon buggies carried astronauts far beyond walking distance from their landers. When each mission ended, the rover was parked on the surface, because every kilogram of moon rock was worth more than the rover on the trip home.",
+    facts: ["Folded up to fit inside the lander","Still parked where the astronauts left it","No wind or rain means it barely changes"] },
+  { icon: "🛬", x: 52, y: 64, name: "Tranquility Base", year: 1969,
+    tag: "Left behind July 1969 · Apollo 11",
+    text: "The lower half of the Eagle lander stayed on the Moon as the launch platform for the astronauts’ return. Around it lie scientific instruments, tools and the first human footprints on another world.",
+    facts: ["A plaque says the crew came in peace for all mankind","Footprints can last millions of years","Items were left to save weight for the flight home"] },
+  { icon: "📷", x: 80, y: 72, name: "Surveyor 3", year: 1967,
+    tag: "Landed April 1967 · Visited November 1969",
+    text: "This robotic lander was a scout for the Apollo missions. Two and a half years later, the Apollo 12 astronauts walked to it and brought home pieces, including its camera, so scientists could study how materials age in space.",
+    facts: ["The only spacecraft humans have revisited on another world","Returned parts helped study the lunar environment","The rest of the lander is still there"] }
+];
+
+var MARS = [
+  { icon: "🤖", x: 22, y: 68, name: "Spirit Rover", year: 2010, planned: 0.25, actual: 6,
+    tag: "Landed January 2004 · Last contact March 2010",
+    text: "Spirit was planned to work for about 90 days. It lasted years, until it became stuck in soft sand in 2009. It kept doing science as a stationary station until it lost contact in 2010.",
+    facts: ["Found evidence that water once existed near its landing site","Outlived its planned mission many times over","Stuck for good, yet kept sending data"] },
+  { icon: "🛰️", x: 52, y: 62, name: "Opportunity Rover", year: 2018, planned: 0.25, actual: 14,
+    tag: "Landed January 2004 · Last contact June 2018",
+    text: "Opportunity was also designed for 90 days and worked for about 14 years. A giant global dust storm blocked the sunlight its solar panels needed, and it went silent in 2018. NASA declared the mission complete in February 2019.",
+    facts: ["Drove farther than any other vehicle on another world at the time","Found strong evidence of ancient water on Mars","Its last message became a famous poetic goodbye"] },
+  { icon: "📡", x: 80, y: 72, name: "Viking 1 Lander", year: 1982,
+    tag: "Landed July 1976 · Last contact November 1982",
+    text: "Viking 1 was the first successful long-duration lander on Mars. It took the first photos from the surface, tested soil for signs of life and kept working for over six years. It was later renamed in honour of a Viking mission scientist.",
+    facts: ["Searched for life in Martian soil","Sent the first detailed color pictures from the surface","Lost contact in 1982 after a faulty software update"] }
+];
+
+var QUIZ_COUNT = 5; /* how many questions each visitor gets */
+
+var QUIZ_POOL = [
+  { q: "Why were the Apollo rovers left on the Moon?",
+    a: ["Nobody liked them","Every kilogram saved allowed more moon rock to come home","They were too hot to touch"], right: 1 },
+  { q: "Which spacecraft did humans visit again after landing on the Moon?",
+    a: ["Surveyor 3","Viking 1","Spirit"], right: 0 },
+  { q: "How long was Spirit originally planned to work?",
+    a: ["About 90 days","About 10 years","About 1 week"], right: 0 },
+  { q: "What ended the Opportunity mission?",
+    a: ["A meteor strike","A giant dust storm blocking sunlight","Running out of fuel"], right: 1 },
+  { q: "Which was the first long-duration lander on Mars?",
+    a: ["Opportunity","Spirit","Viking 1"], right: 2 },
+  { q: "What message is on the plaque left at Tranquility Base?",
+    a: ["We came in peace for all mankind","Property of NASA","See you next year"], right: 0 },
+  { q: "How many Apollo moon rovers were left on the Moon?",
+    a: ["One","Three","Ten"], right: 1 },
+  { q: "About how long did Opportunity keep working on Mars?",
+    a: ["90 days","2 years","14 years"], right: 2 },
+  { q: "What trapped Spirit in 2009?",
+    a: ["A rock wall","Soft sand","A crater lake"], right: 1 },
+  { q: "In which year did Viking 1 land on Mars?",
+    a: ["1969","1976","2004"], right: 1 },
+  { q: "What were the Viking landers testing the Martian soil for?",
+    a: ["Gold","Signs of life","Fuel"], right: 1 },
+  { q: "Which Apollo crew walked to Surveyor 3 and brought parts home?",
+    a: ["Apollo 11","Apollo 12","Apollo 17"], right: 1 },
+  { q: "Why can human footprints on the Moon last millions of years?",
+    a: ["There is no wind or rain to erase them","The dust is glued together","Robots repair them"], right: 0 },
+  { q: "Which two rovers both landed on Mars in January 2004?",
+    a: ["Spirit and Opportunity","Viking 1 and Surveyor 3","Spirit and Viking 1"], right: 0 }
+];
+
+/* ================== END OF EDIT AREA. Code below: leave as is. ================== */
+
+var $ = function(id){ return document.getElementById(id); };
+function esc(s){ var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+$("title").textContent = SITE.title;
+$("subtitle").textContent = SITE.subtitle;
+$("footer").textContent = SITE.footer;
+$("kicker").textContent = "NASA Space Apps Challenge · Team " + SITE.team;
+document.title = SITE.title;
+$("cMoon").textContent = MOON.length + " abandoned objects";
+$("cMars").textContent = MARS.length + " abandoned objects";
+
+/* warp-speed starfield */
+(function(){
+  var c = $("sky"), g = c.getContext("2d"), S = [], w, h;
+  function size(){ w = c.width = innerWidth; h = c.height = innerHeight; S = []; for (var i = 0; i < 170; i++) S.push({ x: (Math.random() - .5) * w, y: (Math.random() - .5) * h, z: Math.random() * w }); }
+  function draw(){
+    g.fillStyle = "#04060f"; g.fillRect(0, 0, w, h);
+    for (var i = 0; i < S.length; i++){
+      var s = S[i]; s.z -= 0.6; if (s.z < 1){ s.z = w; s.x = (Math.random() - .5) * w; s.y = (Math.random() - .5) * h; }
+      var k = 160 / s.z, px = s.x * k + w / 2, py = s.y * k + h / 2, r = Math.max(.3, (1 - s.z / w) * 2);
+      g.globalAlpha = Math.min(1, 1.2 - s.z / w); g.fillStyle = i % 9 === 0 ? "#38e8ff" : "#fff";
+      g.beginPath(); g.arc(px, py, r, 0, 6.3); g.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  size(); addEventListener("resize", size); draw();
+})();
+
+var ALL = MOON.concat(MARS), seen = {}, world = "moon", typeToken = 0;
+
+function progress(){
+  var n = 0, d = "";
+  ALL.forEach(function(e){ if (seen[e.name]) n++; d += "<i class=\"" + (seen[e.name] ? "on" : "") + "\"></i>"; });
+  $("dots").innerHTML = d;
+  $("progText").textContent = n + " / " + ALL.length;
+  $("badge").style.display = n === ALL.length ? "block" : "none";
+  var tb = $("tl").querySelectorAll("button");
+  ALL.forEach(function(e, i){ });
+  for (var i = 0; i < tb.length; i++) tb[i].className = "glass" + (seen[tb[i].getAttribute("data-n")] ? " seen" : "");
+}
+
+function countUp(el, target){
+  var v = 0, step = Math.max(1, Math.ceil(target / 40));
+  var t = setInterval(function(){ v += step; if (v >= target){ v = target; clearInterval(t); } el.textContent = v; }, 25);
+}
+
+function showWorld(wd){
+  world = wd;
+  var list = wd === "moon" ? MOON : MARS;
+  $("scene").className = "scene " + wd;
+  $("pMoon").className = "glass portal" + (wd === "moon" ? " on" : "");
+  $("pMars").className = "glass portal" + (wd === "mars" ? " on" : "");
+  var h = "<span class=\"c c1\"></span><span class=\"c c2\"></span><span class=\"c c3\"></span><span class=\"c c4\"></span><div class=\"orb\"></div><div class=\"ground\"></div>";
+  if (wd === "mars"){ h += "<div class=\"dust\">"; for (var i = 0; i < 16; i++) h += "<i style=\"top:" + (28 + Math.random() * 68) + "%;animation-duration:" + (7 + Math.random() * 9) + "s;animation-delay:-" + (Math.random() * 12) + "s\"></i>"; h += "</div>"; }
+  $("scene").innerHTML = h;
+  list.forEach(function(e){
+    var b = document.createElement("button");
+    b.className = "spot" + (seen[e.name] ? " seen" : "");
+    b.style.left = e.x + "%"; b.style.top = e.y + "%";
+    b.innerHTML = e.icon + "<span>" + esc(e.name) + "</span>";
+    b.setAttribute("aria-label", e.name);
+    b.onclick = function(){ openExhibit(e); };
+    $("scene").appendChild(b);
+  });
+  $("panel").innerHTML = "<p class=\"lost\">● AWAITING SIGNAL</p><p style=\"margin:6px 0 0;color:var(--muted)\">" + (wd === "moon" ? "You are standing on the Moon. Earth hangs in the black sky above you. Which object will you visit first?" : "You are standing on Mars. Dust drifts across a tiny, distant Sun. Which machine will you visit first?") + "</p>";
+}
+
+function openExhibit(e){
+  var wd = MOON.indexOf(e) >= 0 ? "moon" : "mars";
+  if (wd !== world) showWorld(wd);
+  seen[e.name] = true;
+  var spots = $("scene").querySelectorAll(".spot");
+  (wd === "moon" ? MOON : MARS).forEach(function(x, i){ if (seen[x.name]) spots[i].className = "spot seen"; });
+  var now = new Date().getFullYear();
+  var h = "<p class=\"lost\">● SIGNAL LOST IN " + e.year + "</p><div class=\"top\"><div class=\"big\">" + e.icon + "</div><div><h3>" + esc(e.name) + "</h3><p class=\"tag\">" + esc(e.tag) + "</p></div></div>";
+  h += "<div class=\"stats\"><div class=\"stat\"><b id=\"yrs\">0</b><small>years of silence</small></div>";
+  if (e.actual) h += "<div class=\"stat\"><b>" + Math.round(e.actual / e.planned) + "×</b><small>longer than planned</small></div>";
+  h += "<div class=\"stat\"><b>" + e.year + "</b><small>went quiet</small></div></div>";
+  h += "<p id=\"tw\" style=\"min-height:110px\"></p><div class=\"chips\">";
+  e.facts.forEach(function(f){ h += "<span>✦ " + esc(f) + "</span>"; });
+  $("panel").innerHTML = h + "</div>";
+  countUp($("yrs"), now - e.year);
+  var token = ++typeToken, i = 0, tw = $("tw");
+  (function tick(){ if (token !== typeToken) return; i += 3; tw.textContent = e.text.slice(0, i); if (i < e.text.length) setTimeout(tick, 16); })();
+  progress();
+  $("panel").scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+$("pMoon").onclick = function(){ showWorld("moon"); };
+$("pMars").onclick = function(){ showWorld("mars"); };
+
+var sorted = ALL.slice().sort(function(a, b){ return a.year - b.year; });
+sorted.forEach(function(e){
+  var b = document.createElement("button");
+  b.className = "glass"; b.setAttribute("data-n", e.name);
+  b.innerHTML = "<b>" + e.year + "</b>" + e.icon + " " + esc(e.name) + "<br><small>" + (MOON.indexOf(e) >= 0 ? "Moon" : "Mars") + "</small>";
+  b.onclick = function(){ openExhibit(e); $("scene").scrollIntoView({ behavior: "smooth", block: "start" }); };
+  $("tl").appendChild(b);
+});
+
+showWorld("moon");
+progress();
+
+var QUIZ = [], quizBox = $("quiz"), qi = 0, score = 0;
+function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function newRound(){
+  qi = 0; score = 0;
+  QUIZ = shuffle(QUIZ_POOL).slice(0, QUIZ_COUNT).map(function(q){
+    var order = shuffle(q.a.map(function(x, i){ return i; }));
+    return { q: q.q, a: order.map(function(i){ return q.a[i]; }), right: order.indexOf(q.right) };
+  });
+}
+newRound();
+function renderQuiz(){
+  if (qi >= QUIZ.length){
+    var msg = score === QUIZ.length ? "Perfect! You are a true space curator." : score >= 3 ? "Great job, explorer!" : "Revisit the exhibits and try again.";
+    quizBox.innerHTML = "<h3>You scored " + score + " out of " + QUIZ.length + " 🎉</h3><p style=\"color:var(--muted)\">" + msg + " Thank you for keeping these explorers in memory.</p><button class=\"qbtn\" id=\"again\">Try again</button>";
+    $("again").onclick = function(){ newRound(); renderQuiz(); };
+    return;
+  }
+  var item = QUIZ[qi];
+  quizBox.innerHTML = "<p class=\"tag\">Question " + (qi + 1) + " of " + QUIZ.length + "</p><h3 style=\"margin-bottom:8px\">" + esc(item.q) + "</h3>";
+  item.a.forEach(function(text, i){
+    var b = document.createElement("button");
+    b.className = "opt"; b.textContent = text;
+    b.onclick = function(){
+      var all = quizBox.querySelectorAll(".opt");
+      for (var k = 0; k < all.length; k++) all[k].disabled = true;
+      all[item.right].className = "opt good";
+      if (i === item.right) score++; else b.className = "opt bad";
+      var next = document.createElement("button");
+      next.className = "qbtn"; next.style.marginTop = "12px";
+      next.textContent = qi === QUIZ.length - 1 ? "See my score" : "Next question";
+      next.onclick = function(){ qi++; renderQuiz(); };
+      quizBox.appendChild(next);
+    };
+    quizBox.appendChild(b);
+  });
+}
+renderQuiz();
+
+</script>
+</body>
+</html>
